@@ -39,11 +39,27 @@ var app = function () {
         onDeviceReady: function () {
             app.receivedEvent('deviceready');
 
-            var $loginButton = $('#login button');
+            var $loginButton = $('#login button.login');
+            var $loginButton = $('#login button.logout');
             var $loginStatus = $('#login p');
 
             $loginButton.on('click', function () {
                 api.authorize({
+                    client_id: 'implicitclient',
+                    redirect_uri: 'http://192.168.0.107:44319/',
+                    scope: 'openid profile read write email sampleApi',
+                    response_type: 'id_token token'
+                }).done(function (data) {
+                    app.accessToken = data.access_token;
+                    app.idToken = data.idToken;
+                    $loginStatus.html('Access Token: ' + data.access_token);
+                }).fail(function (data) {
+                    $loginStatus.html(data.error);
+                });
+            });
+
+            $loginButton.on('click', function () {
+                api.({
                     client_id: 'implicitclient',
                     redirect_uri: 'http://192.168.0.107:44319/',
                     scope: 'openid profile read write email sampleApi',

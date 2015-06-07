@@ -12,19 +12,23 @@ OAuthClient.prototype.createImplicitFlowRequest = function (clientid, callback, 
     nonce = nonce.toString().replace(".", "");
 
     var url =
-        this.url + "?" + 
-        "client_id=" + encodeURIComponent(clientid) + "&" + 
-        "redirect_uri=" + encodeURIComponent(callback) + "&" + 
+        this.url + "/connect/authorize?" +
+        "client_id=" + encodeURIComponent(clientid) + "&" +
+        "redirect_uri=" + encodeURIComponent(callback) + "&" +
         "response_type=" + encodeURIComponent(responseType) + "&" +
-        "scope=" + encodeURIComponent(scope) + "&" + 
-        "state=" + encodeURIComponent(state) + "&" + 
+        "scope=" + encodeURIComponent(scope) + "&" +
+        "state=" + encodeURIComponent(state) + "&" +
         "nonce=" + encodeURIComponent(nonce);
 
     return {
-        url:url, 
+        url: url,
         state: state,
         nonce: nonce
     };
+};
+
+OAuthClient.prototype.getLogoutRequestUrl = function () {
+    return this.url + "/connect/end_session";
 };
 
 OAuthClient.prototype.parseResult = function (queryString) {

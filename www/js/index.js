@@ -40,16 +40,11 @@ var app = function () {
             app.receivedEvent('deviceready');
 
             var $loginButton = $('#login button.login');
-            var $loginButton = $('#login button.logout');
+            var $logoutButton = $('#login button.logout');
             var $loginStatus = $('#login p');
 
             $loginButton.on('click', function () {
-                api.authorize({
-                    client_id: 'implicitclient',
-                    redirect_uri: 'http://192.168.0.107:44319/',
-                    scope: 'openid profile read write email sampleApi',
-                    response_type: 'id_token token'
-                }).done(function (data) {
+                api.authorize(config.oAuth).done(function (data) {
                     app.accessToken = data.access_token;
                     app.idToken = data.idToken;
                     $loginStatus.html('Access Token: ' + data.access_token);
@@ -58,19 +53,8 @@ var app = function () {
                 });
             });
 
-            $loginButton.on('click', function () {
-                api.({
-                    client_id: 'implicitclient',
-                    redirect_uri: 'http://192.168.0.107:44319/',
-                    scope: 'openid profile read write email sampleApi',
-                    response_type: 'id_token token'
-                }).done(function (data) {
-                    app.accessToken = data.access_token;
-                    app.idToken = data.idToken;
-                    $loginStatus.html('Access Token: ' + data.access_token);
-                }).fail(function (data) {
-                    $loginStatus.html(data.error);
-                });
+            $logoutButton.on('click', function () {
+                // logout
             });
 
             var apiButton = $('#api button');
@@ -94,16 +78,16 @@ var app = function () {
                     alert("wwwAuthenticate: " + xhr.getResponseHeader("WWW-Authenticate"));
                     apiStatus.html(statusText);
                 };
-                xhr.open("GET", "http://192.168.0.107:44321/identity", true);
+                xhr.open("GET", config.baseApiUrl + "/identity", true);
                 xhr.setRequestHeader("Authorization", "Bearer " + app.accessToken);
                 xhr.send();
             });
 
-            if (cordova.InAppBrowser == null) {
-                alert("InApBrowser is null.  Did you add the InAppBrowser plugin?");
-            } else {
-                window.open = cordova.InAppBrowser.open;
-            }
+            // if (cordova.InAppBrowser == null) {
+            //     alert("InnAppBrowser is null.  Did you add the InAppBrowser plugin?");
+            // } else {
+            //     window.open = cordova.InAppBrowser.open;
+            // }
         },
         // Update DOM on a Received Event
         receivedEvent: function (id) {

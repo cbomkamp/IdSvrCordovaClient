@@ -1,9 +1,9 @@
-var oauth = new OAuthClient("http://192.168.0.107:44319/identity");
+var oauth = new OAuthClient(config.baseIdentityServerUrl);
 var api = {
-    authorize: function(options) {
+    authorize: function(oAuthConfig) {
         var deferred = $.Deferred();
 
-        var req= oauth.createImplicitFlowRequest(options.client_id, options.redirect_uri, options.scope, options.response_type);
+        var req= oauth.createImplicitFlowRequest(oAuthConfig.client_id, oAuthConfig.redirect_uri, oAuthConfig.scope, oAuthConfig.response_type);
         // Now we need to open a window.
         var authWindow = window.open(req.url, '_blank', 'location=no,toolbar=no');
 

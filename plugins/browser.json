@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.carlbomkamp.idsvrclient2"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.carlbomkamp.idsvrclient2"
         }
     },
     "dependent_plugins": {}

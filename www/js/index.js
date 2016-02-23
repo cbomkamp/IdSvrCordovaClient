@@ -83,11 +83,11 @@ var app = function () {
                 xhr.send();
             });
 
-            // if (cordova.InAppBrowser == null) {
-            //     alert("InnAppBrowser is null.  Did you add the InAppBrowser plugin?");
-            // } else {
-            //     window.open = cordova.InAppBrowser.open;
-            // }
+            if (cordova.InAppBrowser == null) {
+                alert("InnAppBrowser is null.  Did you add the InAppBrowser plugin?");
+            } else {
+                window.open = cordova.InAppBrowser.open;
+            }
         },
         // Update DOM on a Received Event
         receivedEvent: function (id) {

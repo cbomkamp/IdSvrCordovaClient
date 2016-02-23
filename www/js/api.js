@@ -9,7 +9,9 @@ var api = {
 
         authWindow.addEventListener('loadstart', function(e) { 
           var url= e.url;
-          if (url.indexOf(options.redirect_uri + '#') !== 0) return;
+          // check for the redirect_uri (and optionally a trailing slash) then the hash fragment
+          if (url.indexOf(oAuthConfig.redirect_uri + '#') !== 0 && url.indexOf(oAuthConfig.redirect_uri + '/#') !== 0) return;
+          
           authWindow.close();
           var error = /\#error=(.+)$/.exec(url);
           if( error ) {
